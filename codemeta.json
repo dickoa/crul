@@ -1,27 +1,24 @@
 {
-  "@context": [
-    "https://doi.org/doi:10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "crul",
-  "description": "A simple HTTP client, with tools for making HTTP requests,\n    and mocking HTTP requests. The package is built on R6, and takes\n    inspiration from Ruby's 'faraday' gem (<https://rubygems.org/gems/faraday>).\n    The package name is a play on curl, the widely used command line tool\n    for HTTP, and this package is built on top of the R package 'curl', an\n    interface to 'libcurl' (<https://curl.haxx.se/libcurl>).",
+  "description": "A simple HTTP client, with tools for making HTTP requests, and mocking HTTP requests. The package is built on R6, and takes inspiration from Ruby's 'faraday' gem (<https://rubygems.org/gems/faraday>). The package name is a play on curl, the widely used command line tool for HTTP, and this package is built on top of the R package 'curl', an interface to 'libcurl' (<https://curl.se/libcurl/>).",
   "name": "crul: HTTP Client",
+  "relatedLink": ["https://docs.ropensci.org/crul/", "https://books.ropensci.org/http-testing/"],
   "codeRepository": "https://github.com/ropensci/crul",
   "issueTracker": "https://github.com/ropensci/crul/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.6.0",
+  "version": "1.6.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.5.1",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.5.1 RC (2018-06-29 r74946)",
+  "runtimePlatform": "R version 4.5.1 (2025-06-13)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
-    "name": "Central R Archive Network (CRAN)",
+    "name": "Comprehensive R Archive Network (CRAN)",
     "url": "https://cran.r-project.org"
   },
   "author": [
@@ -47,6 +44,7 @@
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
+      "version": ">= 3.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -54,6 +52,19 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "roxygen2",
+      "name": "roxygen2",
+      "version": ">= 7.1.1",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=roxygen2"
     },
     {
       "@type": "SoftwareApplication",
@@ -72,7 +83,7 @@
       "@type": "SoftwareApplication",
       "identifier": "webmockr",
       "name": "webmockr",
-      "version": ">= 0.1.0",
+      "version": ">= 2.2.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -80,6 +91,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=webmockr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "withr",
+      "name": "withr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=withr"
     },
     {
       "@type": "SoftwareApplication",
@@ -95,23 +118,23 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "jsonlite",
-      "name": "jsonlite",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=jsonlite"
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "curl",
       "name": "curl",
-      "version": ">= 3.1",
+      "version": ">= 3.3",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -120,7 +143,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=curl"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -133,7 +156,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "urltools",
       "name": "urltools",
@@ -146,7 +169,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=urltools"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "httpcode",
       "name": "httpcode",
@@ -159,7 +182,19 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httpcode"
     },
-    {
+    "5": {
+      "@type": "SoftwareApplication",
+      "identifier": "jsonlite",
+      "name": "jsonlite",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=jsonlite"
+    },
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "mime",
       "name": "mime",
@@ -170,14 +205,35 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=mime"
-    }
-  ],
+    },
+    "7": {
+      "@type": "SoftwareApplication",
+      "identifier": "rlang",
+      "name": "rlang",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rlang"
+    },
+    "8": {
+      "@type": "SoftwareApplication",
+      "identifier": "lifecycle",
+      "name": "lifecycle",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=lifecycle"
+    },
+    "SystemRequirements": null
+  },
   "applicationCategory": "Web",
   "isPartOf": "https://ropensci.org",
-  "keywords": ["http", "https", "API", "web-services", "curl", "download", "libcurl", "async", "mocking", "caching", "rstats", "api", "r", "r-package"],
-  "contIntegration": "https://travis-ci.org/ropensci/crul",
-  "developmentStatus": "active",
-  "releaseNotes": "https://github.com/ropensci/crul/blob/master/NEWS.md",
-  "readme": "https://github.com/ropensci/crul/blob/master/README.md",
-  "fileSize": "52.648KB"
+  "keywords": ["http", "https", "API", "web-services", "curl", "download", "libcurl", "async", "mocking", "caching"],
+  "fileSize": "1258.547KB"
 }

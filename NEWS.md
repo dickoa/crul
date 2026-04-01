@@ -1,3 +1,204 @@
+# crul (development version)
+
+crul 1.6.0
+==========
+
+### NEW FEATURES
+
+* generic mocking is now controlled in each HTTP client (`HttpClient`, `Async`, and `AsyncVaried`) via an initialization parameter `AsyncVaried` or through each HTTP class method (e.g., `get`, `post` on `HttpClient`, `Async`). mocking used to be tied to `webmockr` but now can be controlled independently (#184)
+
+### DEPRECATED
+
+* `mock()` is deprecated, and will be removed in a future version. Mocking is now controlled by parameters within the various HTTP clients: `HttpClient`, `Async`, and `AsyncVaried` (#184)
+
+
+crul 1.5.0
+==========
+
+### NEW FEATURES
+
+* gains ability to mock (via `webmockr`) async requests via either `Async` and/or `AsyncVaried` (thanks @keller-mark) (#180)
+
+### INTERNAL
+
+* reduce use of single letter variables within crul code to make code easier to understand (#181)
+
+
+crul 1.4.2
+==========
+
+### DOCUMENTATION
+
+* fix typos (thanks @mdsumner and @espinielli) (#173) (#176)
+* change to `_PACKAGE` pattern for pkg level man file (#177)
+
+### INTERNAL
+
+* tweak to test helper base url setup (#178)
+
+
+crul 1.4
+========
+
+### ASYNC RETRIES
+
+Via the two issues (#135) and (#159) `crul` now supports http retries in: `Async`, `AsyncVaried`, `AsyncQueue`, and the request builder class `HttpRequest`
+
+
+crul 1.3
+========
+
+### BUG FIXES
+
+* improved error message for `Async` when `urls` and `disk` vector lengths do not match (they must match) (#165) thanks @shakraz
+
+
+crul 1.2
+========
+
+### DOCUMENTATION
+
+* fix example in `AsyncQueue` docs (#146) thanks @johnbaums !
+* update `HttpClient` docs to state that it's an R6 class, and give some details on what an R6 class is and links to more info (#155)
+
+### NEW FEATURES
+
+* `AsyncQueue` gains methods: `parse`, `status_code`, `status`, `content`, and `times` (#156)
+* `$responses()` method now returns an S3 class with an associated print method to prevent printing a lot of results to the screen; print method pritns a summary of results, and at most 10 results, just status code and url (#157)
+
+
+### MINOR IMPROVEMENTS
+
+* parsing response headers gains a check for whether encoding is valid, and if not tries to set Latin1 encoding, and if that doesn't work, fails out with message (#163) (#164) thanks @FlukeAndFeather
+
+
+crul 1.1
+========
+
+### NEW FEATURES
+
+* `Paginator` gains support for query parameter combination `page`/`per_page`  to automatically paginate (#145)
+
+### MINOR IMPROVEMENTS
+
+* fix typo (#149) thanks @dpprdan
+* Change to how numbers are handled in query parameters. We unfortunately hadn't tested this package with large numbers, which were being converted to scientific notation with a certain number of digits before a decimal. Fixed handling of query parameters to avoid this problem. Fix for `Paginator` as well as for `HttpClient` (#151) (#152) (#153) thanks @ateucher
+
+### BUG FIXES
+
+* sometimes weird response headers are returned in an HTTP response that can not be easily parsed; `crul` would raise an error when this header parsing happens, but now we raise a warning instead (#150)
+
+
+crul 1.0
+========
+
+### ok related changes
+
+* `ok()` can now accept more than 1 status code so that you can check if the status of a url is within a set of status codes rather than equal to 1 status code (#124)
+* `ok()` gains a parameter `verb` to use either head or get requests. in addition added more documentation (#125) to the function on how to get the "right answer" for whether a url is ok/up  (#123) (#127)
+* `ok()` gains parameter `ua_random`, which if `TRUE`, will use a random user agent string pulled from a vector of 50 user agent strings generated from `charlatan::UserAgentProvider` (#138)
+
+### NEW FEATURES
+
+* gains new async class `AsyncQueue` for doing async requests with rate limits (#139)
+* gains new functions `curl_verbose()` and `set_verbose()`. `curl_verbose()` can be set by passing to the initialize step (e.g., `HttpClient$new(url, verbose=curl_verbose())`), and gets more compact verbose curl output, while also getting request body information (and response body optionally). `set_verbose()` is sets `curl_verbose()` globally (#141)
+* gains new vignette "How to choose a client" for choosing which crul class to use (e.g., `HttpClient` vs. `Async`)  (#133) (#143)
+
+### MINOR IMPROVEMENTS
+
+* package sticker done, shown in README (#42)
+* improve function/class reference page in docs site (#131)
+* improvements to the best practices vignette (#132)
+* removed unused private variable in the `AsyncVaried` class (#140)
+* fix inaccuracy in documentation for the RETRY method (#130)
+* `HttpRequest` now adds the query (if present) to the printed url in the print method for the class (it was absent before now) (#128)
+* use new roxygen2 support for R6 classes (#126)
+* removed `delete-requests` and `post-requests` manual files - mostly redundant with other documentation
+
+
+crul 0.9.0
+==========
+
+### NEW FEATURES
+
+* `HttpResponse` response object gains new methods for checking response content types, includes: `raise_for_ct`, `raise_for_ct_html`, `raise_for_ct_json`, `raise_for_ct_xml`. these behave similarly to `raise_for_status`, and can behave as a warning or raise an error through stop (#119) (#120)
+
+### MINOR IMPROVEMENTS
+
+* fix to prep_body internal function to handle various body inputs; now avoids warning about `as.character.form_file` when both httr and crul are loaded (#112)
+* finish off "Failing with fauxpas" section of the "API package best practices" vignette (#121)
+
+### BUG FIXES
+
+* the `head()` verb on `HttpClient` was no capturing `auth` when set on initialization (#122)
+
+
+crul 0.8.4
+==========
+
+### MINOR IMPROVEMENTS
+
+* `jsonlite` package moved to Imports (#112)
+* the `parse()` method in the `HttpResponse` object now checks whether the response raw bytes can be converted to character, and if not just returns raw bytes (#115) (#116)
+* give vignettes titles (#113) (#114)
+
+### BUG FIXES
+
+* no longer setting `cainfo` curl option, fixes problem arising from change in recent libcurl version (#117)
+
+
+crul 0.8.0
+==========
+
+### NEW FEATURES
+
+* you can now pass on parameters through the `parse()` method of an `HttpResponse` class to the internally called function `iconv()` to finely control the usage of `iconv` for cases in which normal encoding conversion doesn't work  (#110)
+
+### MINOR IMPROVEMENTS
+
+* use `httpcode` package instead of `fauxpas` package within `ok()` function (#108) (#109) thanks @maelle !
+* fix links to http testing book - ropensci -> ropenscilabs (#111)
+
+
+crul 0.7.4
+==========
+
+### NEW FEATURES
+
+* event hooks added to `HttpClient`. both request and response hooks supported. not supported in async methods for now (#76) (#107)
+
+### MINOR IMPROVEMENTS
+
+* improve `$parse()` behavior (in the `HttpResponse` object) when using disk or stream. `$parse()` was throwing a warning when using disk and an error when using stream. and improves behavior when doing async requests (#104)
+* `Paginator` gains optional progress bar through the new `progress` parameter. In addition, the `cat()` calls inside the method were removed, so as not to insert newlines with each page and to not print "OK" when done (#106) thanks @boshek
+
+### BUG FIXES
+
+* passing on opts/headers now works with `Async` (#101) (#103)
+* streaming was broken in `AsyncVaried` with `curl` of a certain version, works now (#102) (#103)
+
+
+crul 0.7.0
+==========
+
+### NEW FEATURES
+
+* `HttpClient` gains a `retry` method: retries any request verb until successful (HTTP response status < 400) or a condition for giving up is met. (#89) (#95) thanks @hlapp
+* `HttpClient`, `HttpRequest`, and `Async` classes gain `verb` method for doing HTTP requests specifying any of the supported HTTP verbs  (#97)
+* `HttpClient` and `Paginator` gain a `url_fetch` method: get the URL that would be sent in an HTTP request without sending the HTTP request. Useful for getting the URL before executing an HTTP request if you need to check something about the URL first. (#92)
+* new vignette for "API package best practices" (#65)
+* Package gains manual files for each HTTP verb to facilitate linking to package documentation for information on each HTTP verb (#98)
+* Intermediate headers (e.g., those in redirect chains) are now given back in a new slot in the `HttpResponse` class as `$response_headers_all` as an unnamed list, with each element a named list of headers; the last list in the set is the final response headers that match those given in the `$response_headers` slot (#60) (#99)
+
+### BUG FIXES
+
+* some dangling file connections were left open - now fixed (#93) (#95)
+* fix `url_parse`: lacked check that input was a string, and that it was length 1 - this PR fixed that (#100) thanks @aaronwolen
+
+### DEFUNCT
+
+* `HttpStubbedResponse` was removed from the package - it may have been used at some point, but is not used in the package anymore (#88)
+
 crul 0.6.0
 ==========
 
@@ -23,14 +224,14 @@ crul 0.5.2
 
 ### MINOR IMPROVEMENTS
 
-* Fixed handling of user agent: you can pass a UA string 
+* Fixed handling of user agent: you can pass a UA string
 as a curl option or a header. Previously, we were wrongly overwriting
-the user input UA if given as a curl option - but were not doing 
+the user input UA if given as a curl option - but were not doing
 so if given as a header. This is fixed now.  (#63) thx to @maelle and @dpprdan
 
 ### BUG FIXES
 
-* Fix to `Paginator` - it wasn't handling pagination correctly. 
+* Fix to `Paginator` - it wasn't handling pagination correctly.
 In addition, fixed to hopefully handle all scenarios now. added
 more tests (#62)
 * Fixed handling of query parameters. We were using `urltools::url_encode`
@@ -65,12 +266,12 @@ crul 0.4.0
 
 * fixes to reused curl handles - within a connection object only,
 not across connection objects (#45)
-* `crul` now drops any options passed in to `opts` or to `...` that 
+* `crul` now drops any options passed in to `opts` or to `...` that
 are not in set of allowed curl options, see `curl::curl_options()` (#49)
-* cookies should now be persisted across requests within 
+* cookies should now be persisted across requests within
 a connection object, see new doc `?cookies` for how to set cookies (#44)
 * gather cainfo and use in curl options when applicable (#51)
-* remove `disk` and `stream` from `head` method in `HttpClient` 
+* remove `disk` and `stream` from `head` method in `HttpClient`
 and `HttpRequest` as no body returned in a HEAD request
 
 
@@ -80,7 +281,7 @@ crul 0.3.8
 ### BUG FIXES
 
 * Fixed `AsyncVaried` to return async responses in the order that
-they were passed in. This also fixes this exact same behavior in 
+they were passed in. This also fixes this exact same behavior in
 `Async` because `Async` uses `AsyncVaried` internally. (#41)
 thanks @dirkschumacher for reporting
 
@@ -89,27 +290,27 @@ thanks @dirkschumacher for reporting
 crul 0.3.6
 ==========
 
-* Note: This version gains support for integration with 
+* Note: This version gains support for integration with
 `webmockr`, which is now on CRAN.
 
 ### NEW FEATURES
 
 * New function `auth()` to do simple authentication (#33)
-* New function `HttpStubbedResponse` for making a stubbed 
+* New function `HttpStubbedResponse` for making a stubbed
 response object for the `webmockr` integration (#4)
-* New function `mock()` to turn on mocking - it's off by 
-default. If `webmockr` is not installed but user attempts 
-to use mocking we error with message to install 
+* New function `mock()` to turn on mocking - it's off by
+default. If `webmockr` is not installed but user attempts
+to use mocking we error with message to install
 `webmockr` (#4)
 
 ### MINOR IMPROVEMENTS
 
-* Use `gzip-deflate` by deafult for each request 
-to make sure gzip compression is used if the server 
+* Use `gzip-deflate` by deafult for each request
+to make sure gzip compression is used if the server
 can do it (#34)
-* Change `useragent` to `User-Agent` as default user 
+* Change `useragent` to `User-Agent` as default user
 agent header (#35)
-* Now we make sure that user supplied headers override the 
+* Now we make sure that user supplied headers override the
 default headers if they are of the same name (#36)
 
 

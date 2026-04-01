@@ -1,5 +1,5 @@
 make_type <- function(x) {
-  if (is.null(x))  {
+  if (is.null(x)) {
     return()
   }
   if (substr(x, 1, 1) == ".") {
@@ -33,14 +33,20 @@ prep_body <- function(body, encode, type = NULL) {
     return(raw_body(body, type = type))
   }
   if (inherits(body, "form_file")) {
-    con <- file(body$path, "rb")
-    size <- file.info(body$path)$size
+    filePath <- body$path
+    size <- file.info(filePath)$size
+    con <- NULL
     return(
       list(
         opts = list(
           post = TRUE,
           readfunction = function(nbytes, ...) {
-            if (is.null(con)) return(raw())
+            if (is.null(con)) {
+              con <<- file(filePath, "rb")
+            }
+            if (is.null(con)) {
+              return(raw())
+            }
             bin <- readBin(con, "raw", nbytes)
             if (length(bin) < nbytes) {
               close(con)
@@ -58,8 +64,10 @@ prep_body <- function(body, encode, type = NULL) {
     return(raw_body(raw()))
   }
   if (!is.list(body)) {
-    stop("Unknown type of `body`: must be NULL, FALSE, character, raw or list",
-         call. = FALSE)
+    stop(
+      "Unknown type of `body`: must be NULL, FALSE, character, raw or list",
+      call. = FALSE
+    )
   }
 
   body <- ccp(body)
@@ -78,10 +86,16 @@ prep_body <- function(body, encode, type = NULL) {
       stop("All components of body must be named", call. = FALSE)
     }
     list(
-      opts = list(
-        post = TRUE
-      ),
-      fields = lapply(body, as.character)
+      opts = list(post = TRUE),
+      fields = lapply(body, field_as)
     )
   }
 }
+
+field_as <- function(x) UseMethod("field_as")
+#' @export
+field_as.numeric <- function(x) as.character(x)
+#' @export
+field_as.logical <- function(x) as.character(x)
+#' @export
+field_as.default <- function(x) x

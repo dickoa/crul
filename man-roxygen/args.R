@@ -3,10 +3,13 @@
 #' \code{\link[curl]{curl_options}} for available curl options
 #' @param proxies an object of class \code{proxy}, as returned from the
 #' \code{\link{proxy}} function. Supports one proxy for now
-#' @param auth result of a call to the \code{\link{auth}} function, 
+#' @param auth result of a call to the \code{\link{auth}} function,
 #' e.g. \code{auth(user = "foo", pwd = "bar")}
 #' @param headers (list) a named list of headers
 #' @param handle A handle, see \code{\link{handle}}
 #' @param progress a function with logic for printing a progress
-#' bar for an HTTP request, ultimiately passed down to \pkg{curl}.
+#' bar for an HTTP request, ultimately passed down to \pkg{curl}.
 #' only supports httr::progress() for now
+#' @param hooks (list) a named list (accepts: request, response) of functions
+#' (callbacks) to run on request and response objects. See [hooks] for more
+#' details.

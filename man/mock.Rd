@@ -11,40 +11,8 @@ mock(on = TRUE)
 By default is \code{FALSE}}
 }
 \description{
-Mocking HTTP requests
-}
-\details{
-\code{webmockr} package required for mocking behavior
-}
-\examples{
-\dontrun{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-if (interactive()) {
-  # load webmockr
-  library(webmockr)
-  library(crul)
-
-  URL <- "https://httpbin.org"
-
-  # turn on mocking
-  crul::mock()
-
-  # stub a request
-  stub_request("get", file.path(URL, "get"))
-  webmockr:::webmockr_stub_registry
-
-  # create an HTTP client
-  (x <- HttpClient$new(url = URL))
-
-  # make a request - matches stub - no real request made
-  x$get('get')
-
-  # allow net connect
-  webmockr::webmockr_allow_net_connect()
-  x$get('get', query = list(foo = "bar"))
-  webmockr::webmockr_disable_net_connect()
-  x$get('get', query = list(foo = "bar"))
-}
-
-}
+Mocking is now controlled by params within the various clients:
+\code{\link[=HttpClient]{HttpClient()}}, \code{\link[=Async]{Async()}} and \code{\link[=AsyncVaried]{AsyncVaried()}}
 }

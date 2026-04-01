@@ -16,7 +16,7 @@ you need to give curl options exactly as given in
 }
 \examples{
 \dontrun{
-url <- "https://httpbin.org"
+url <- "https://hb.opencpu.org"
 
 # set curl options on client initialization
 (res <- HttpClient$new(url = url, opts = list(verbose = TRUE)))
@@ -41,5 +41,15 @@ HttpClient$new(url = url,
 HttpClient$new(url = url,
   opts = list(verbose = TRUE, useragent = "hello world")
 )$get('get')
+
+# You can also set custom debug function via the verbose
+# parameter when calling `$new()`
+res <- HttpClient$new(url, verbose=curl_verbose())
+res
+res$get("get")
+res <- HttpClient$new(url, verbose=curl_verbose(data_in=TRUE))
+res$get("get")
+res <- HttpClient$new(url, verbose=curl_verbose(info=TRUE))
+res$get("get")
 }
 }

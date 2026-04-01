@@ -1,29 +1,24 @@
-<!--
-%\VignetteIndexEntry{2. crul workflows}
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteEncoding{UTF-8}
--->
+---
+title: 2. crul workflows
+author: Scott Chamberlain
+date: "2024-07-18"
+output: rmarkdown::html_vignette
+vignette: >
+    %\VignetteIndexEntry{2. crul workflows}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
 
 
-
-crul workflows
-==============
 
 The following aims to help you decide how to use `crul` in different 
 scenarios.
 
-First, `crul` is aimed a bit more at developers than at the casual 
+`crul` is aimed a bit more at developers than at the casual 
 user doing HTTP requests. That is, `crul` is probably a better fit 
 for an R package developer, mainly because it heavily uses `R6` - 
 an interface that's very unlike the interface in `httr` but very
 similar to interacting with classes in Ruby/Python.
-
-Second, there is not yet, but will be soon, the ability to mock 
-HTTP requests. We are working on that, and should have it integrated
-soon. When that feature arrives we'll update this vignette.
-
-Load the library
-
 
 ```r
 library("crul")
@@ -39,6 +34,7 @@ see below if you do.
 
 You'll probably want to write a small function, like so (annotated for 
 clarity)
+
 
 
 ```r
@@ -61,9 +57,34 @@ make_request <- function(url) {
 Use the function
 
 
+
 ```r
-make_request("https://httpbin.org/get")
-#> Error: Service Unavailable (HTTP 503)
+make_request("https://hb.opencpu.org/get")
+#> $args
+#> named list()
+#> 
+#> $headers
+#> $headers$Accept
+#> [1] "application/json, text/xml, application/xml, */*"
+#> 
+#> $headers$`Accept-Encoding`
+#> [1] "gzip, deflate"
+#> 
+#> $headers$Connection
+#> [1] "close"
+#> 
+#> $headers$Host
+#> [1] "httpbin:8080"
+#> 
+#> $headers$`User-Agent`
+#> [1] "libcurl/8.6.0 r-curl/5.2.1 crul/1.5.0"
+#> 
+#> 
+#> $origin
+#> [1] "172.18.0.2"
+#> 
+#> $url
+#> [1] "http://httpbin:8080/get"
 ```
 
 Now you can use the `make_request` function in your script or package.
@@ -75,6 +96,7 @@ want to have more control, toggle more switches.
 
 In the next function, we'll allow for users to pass in curl options, use 
 a custom HTTP status checker, and xxx.
+
 
 
 ```r
@@ -104,6 +126,7 @@ make_request2 <- function(url, ...) {
 Use the function
 
 
+
 ```r
 make_request2("https://api.crossref.org/works?rows=0")
 #> $status
@@ -120,7 +143,7 @@ make_request2("https://api.crossref.org/works?rows=0")
 #> named list()
 #> 
 #> $message$`total-results`
-#> [1] 98119404
+#> [1] 160424746
 #> 
 #> $message$items
 #> list()
@@ -149,6 +172,7 @@ We can also pass named parameters supported in the `get` method, including
 `query`, `disk`, and `stream`.
 
 
+
 ```r
 make_request2("https://api.crossref.org/works", query = list(rows = 0))
 #> $status
@@ -165,7 +189,7 @@ make_request2("https://api.crossref.org/works", query = list(rows = 0))
 #> named list()
 #> 
 #> $message$`total-results`
-#> [1] 98119404
+#> [1] 160424746
 #> 
 #> $message$items
 #> list()
